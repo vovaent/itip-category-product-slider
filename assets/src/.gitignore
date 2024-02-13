@@ -1,0 +1,5 @@
+.idea
+.env
+**/wp
+**/node_modules
+**/**/build

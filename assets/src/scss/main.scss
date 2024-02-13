@@ -1,0 +1,11 @@
+@import '~swiper/css';
+@import '~swiper/css/pagination';
+
+.swiper-pagination {
+	position: relative;
+	bottom: auto;
+}
+
+.swiper-pagination-bullet-active {
+	background-color: #3a3a3a;
+}

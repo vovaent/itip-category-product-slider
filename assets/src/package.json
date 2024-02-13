@@ -1,0 +1,23 @@
+{
+  "name": "ipit-category-product-slider",
+  "version": "0.1.0",
+  "description": "Plugin for displaying product images as a slider on product cards in categories.",
+  "main": "main.js",
+  "author": "vovaent <vovaent@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wp-scripts start --config webpack.config.js",
+    "prod": "wp-scripts build --config webpack.config.js"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.23.10",
+    "@wordpress/eslint-plugin": "^17.8.0",
+    "@wordpress/prettier-config": "^3.8.0",
+    "@wordpress/scripts": "^27.2.0",
+    "prettier": "npm:wp-prettier@latest",
+    "webpack-remove-empty-scripts": "^1.0.4"
+  },
+  "dependencies": {
+    "swiper": "^11.0.6"
+  }
+}
