@@ -20,53 +20,36 @@ function itip_cps__enqueue_scripts_and_styles(): void {
 
 add_action( 'wp_enqueue_scripts', 'itip_cps__enqueue_scripts_and_styles' );
 
-function itip_cps__remove_woocommerce_template_loop_product_thumbnail() {
-	remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail' );
-}
-
-// add_action( 'wp_head', 'itip_cps__remove_woocommerce_template_loop_product_thumbnail' );
-
-function itip_cps__woocommerce_template_loop_product_thumbnail( $size = 'woocommerce_thumbnail', $attr = array(), $placeholder = true ) {
-	global $product;
-
-	if ( ! is_array( $attr ) ) {
-		$attr = array();
-	}
-
-	if ( ! is_bool( $placeholder ) ) {
-		$placeholder = true;
-	}
-
-	$image_size = apply_filters( 'single_product_archive_thumbnail_size', $size );
-
-	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $product ? $product->get_image( $image_size, $attr, $placeholder ) : '';
-}
-
-// add_action( 'woocommerce_before_shop_loop_item_title', 'itip_cps__woocommerce_template_loop_product_thumbnail', 10, 3 );
-
-function aaa( $image ) {
+/**
+ * Adds slider layout and a second image for the product.
+ *
+ * @param string $image HTML-code image
+ *
+ * @return string
+ */
+function itip_cps__add_slider_markup_and_second_image( string $image ): string {
 	$old_image = $image;
 
-	if ( ! function_exists( 'get_field' ) ) {
-		return $old_image;
+	if ( function_exists( 'get_field' ) ) {
+		$product_cropper_image = get_field( 'product_cropper_image' );
+	} else {
+		global $post;
+		$product_cropper_image = get_post_meta( $post->ID, 'product_cropper_image', true );
 	}
-
-	$product_cropper_image = get_field( 'product_cropper_image' );
 
 	if ( ! $product_cropper_image ) {
 		return $old_image;
 	}
 
-	$product_cropper_image_html = wp_get_attachment_image( $product_cropper_image, 'woocommerce_thumbnail' );
+	$product_cropper_image_html = wp_get_attachment_image( $product_cropper_image, 'large' );
 
 	$images  = '<div class="swiper itip-cps"><div class="swiper-wrapper">';
 	$images .= '<div class="swiper-slide">' . $old_image . '</div>';
-	$images .= '<div class="swiper-slide">' . $product_cropper_image_html . '</div>';
+	$images .= '<div class="swiper-slide swiper-slide-additional">' . $product_cropper_image_html . '</div>';
 	$images .= '</div><div class="swiper-pagination"></div>';
 	$images .= '</div>';
 
 	return $images;
 }
 
-add_filter( 'woocommerce_product_get_image', 'aaa', 10, 6 );
+add_filter( 'woocommerce_product_get_image', 'itip_cps__add_slider_markup_and_second_image', 10, 6 );

@@ -1,11 +1,32 @@
-@import '~swiper/css';
-@import '~swiper/css/pagination';
+@import "~swiper/css";
+@import "~swiper/css/pagination";
+@import "~swiper/css/effect-fade";
 
-.swiper-pagination {
-	position: relative;
-	bottom: auto;
+.swiper.itip-cps {
+	margin-bottom: 15px;
 }
 
-.swiper-pagination-bullet-active {
-	background-color: #3a3a3a;
+.woocommerce ul li.product a {
+	.swiper-slide-additional {
+		height: auto;
+
+		img {
+			position: absolute;
+			top: 50%;
+			transform: translate(0%, -50%);
+		}
+	}
+
+	img {
+		margin-bottom: 0;
+	}
+
+	.swiper-pagination {
+		position: relative;
+		bottom: auto;
+	}
+
+	.swiper-pagination-bullet-active {
+		background-color: #3a3a3a;
+	}
 }

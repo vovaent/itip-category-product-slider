@@ -2,4 +2,4 @@
 .env
 **/wp
 **/node_modules
-**/**/build
+assets/build
