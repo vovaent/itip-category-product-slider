@@ -23,7 +23,7 @@ add_action( 'wp_enqueue_scripts', 'itip_cps__enqueue_scripts_and_styles' );
 /**
  * Adds slider layout and a second image for the product.
  *
- * @param string $image HTML-code image
+ * @param string $image HTML-code image.
  *
  * @return string
  */
@@ -41,7 +41,13 @@ function itip_cps__add_slider_markup_and_second_image( string $image ): string {
 		return $old_image;
 	}
 
-	$product_cropper_image_html = wp_get_attachment_image( $product_cropper_image, 'large' );
+	if ( is_numeric( $product_cropper_image ) ) {
+		$product_cropper_image_html = wp_get_attachment_image( $product_cropper_image, 'large' );
+	} elseif ( is_array( $product_cropper_image ) ) {
+		$product_cropper_image_html = wp_get_attachment_image( $product_cropper_image['ID'], 'large' );
+	} else {
+		$product_cropper_image_html = '<img src="' . $product_cropper_image . '">';
+	}
 
 	$images  = '<div class="swiper itip-cps"><div class="swiper-wrapper">';
 	$images .= '<div class="swiper-slide">' . $old_image . '</div>';
